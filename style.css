@@ -99,6 +99,10 @@ button:active {
 .gameButton {
     padding: 1rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1rem;
+}
+
+.startGameButton {
+    padding: 1rem 4rem;
 }

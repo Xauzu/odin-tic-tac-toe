@@ -150,8 +150,6 @@ function setup() {
 
     const startGameButton = document.querySelector('.startGameButton');
     startGameButton.addEventListener('click', () => gameController.startGame());
-    const resetGameButton = document.querySelector('.resetGameButton');
-    resetGameButton.addEventListener('click', () => gameController.resetGame());
     
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
