@@ -1,6 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    border: 0px;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -11,7 +12,6 @@ html, body {
 
 body {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -22,6 +22,12 @@ body {
     place-content: center;
     gap: 0.5rem;
     background-color: rgb(71, 71, 71);
+}
+
+.centerDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .cell {
@@ -38,4 +44,54 @@ body {
 
 .cell:hover {
     background-color: rgb(194, 194, 194);
+}
+
+div.player1, div.player2 {
+    display: flex;
+    flex-direction: column;
+    padding: 4rem;
+    flex: 1;
+    align-items: center;
+}
+
+.name, .symbol {
+    padding: 1rem;
+    margin: 1rem;
+    font-size: xx-large;
+    font-weight:bolder;
+    width: max(10vw, 50%);
+    text-align: center;
+    background-color: rgb(241, 241, 241);
+    border-radius: 4px;
+}
+
+.symbol {
+    width: 2vw;
+}
+
+button > img {
+    width: 2rem;
+    height: 2rem;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    font-weight: bolder;
+    font-size: medium;
+}
+
+button:hover {
+    background-color: rgb(207, 207, 207);
+}
+
+button:active {
+    background-color: rgb(230, 230, 230);
+}
+
+.info {
+    margin-bottom: 4rem;
+    font-size: xx-large;
+    font-weight: bolder;
 }

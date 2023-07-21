@@ -1,4 +1,9 @@
-var debug = 0;
+const player = (name, symbol) => {
+    return {name, symbol};
+};
+
+let players = [ player('Player 1', 'X'), 
+                player('Player 2', 'O')];
 
 const gameController = (() => {
 })();
@@ -37,14 +42,30 @@ const gameBoard = (() => {
             return 1;
         }
         else return 0;
-    };      
-    if (debug) board.fill("D");
-    console.log(debug);
+    };
     return {getBoardState, updateDisplay, clear, play};
 })();
 
-console.log(gameBoard.getBoardState());
+let updatePlayers = (id) => {
+    let user = players[id];
+    user.name = document.querySelector(`.player${+id+1}.name`).value;
+    user.symbol = document.querySelector(`.player${+id+1}.symbol`).value;
+};
 
-gameBoard.play({symbol: "X"}, 1, 1);
-gameBoard.play({symbol: "X"}, 1, 1);
-gameBoard.updateDisplay();
+function setup() {
+    let symbolBoxes = document.querySelectorAll('.symbol');
+    symbolBoxes.forEach(element => {
+        element.addEventListener('change', () => {
+            element.value = element.value.charAt(0);
+        });
+    });
+
+    let updateButtons = document.querySelectorAll('.updatePlayerButton');
+    updateButtons.forEach(element => {
+        element.addEventListener('click', () => {
+            updatePlayers(element.getAttribute('pid'));
+        });
+    });
+}
+
+setup();

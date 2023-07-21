@@ -11,17 +11,29 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="info">...loading</div>
-    <div class="display">
-        <div class="cell" data-id="0"></div>
-        <div class="cell" data-id="1"></div>
-        <div class="cell" data-id="2"></div>
-        <div class="cell" data-id="3"></div>
-        <div class="cell" data-id="4"></div>
-        <div class="cell" data-id="5"></div>
-        <div class="cell" data-id="6"></div>
-        <div class="cell" data-id="7"></div>
-        <div class="cell" data-id="8"></div>
+    <div class="player1">
+        <input type="text" name="p1Name" class="player1 name" value="Player 1">
+        <input type="text" name="p1Symbol" class="player1 symbol" value="X">
+        <button class="updatePlayerButton" pid="0">Update<img src="refresh.png" alt="refresh"></button>
+    </div>
+    <div class="centerDisplay">
+        <div class="info">Tic-Tac-Toe</div>
+        <div class="display">
+            <div class="cell" data-id="0"></div>
+            <div class="cell" data-id="1"></div>
+            <div class="cell" data-id="2"></div>
+            <div class="cell" data-id="3"></div>
+            <div class="cell" data-id="4"></div>
+            <div class="cell" data-id="5"></div>
+            <div class="cell" data-id="6"></div>
+            <div class="cell" data-id="7"></div>
+            <div class="cell" data-id="8"></div>
+        </div>
+    </div>
+    <div class="player2">
+        <input type="text" name="p2Name" class="player2 name" value="Player 2">
+        <input type="text" name="p2Symbol" class="player2 symbol" value="O">
+        <button class="updatePlayerButton" pid="1">Update<img src="refresh.png" alt="refresh"></button>
     </div>
 </body>
 </html>
