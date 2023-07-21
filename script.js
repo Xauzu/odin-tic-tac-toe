@@ -44,6 +44,7 @@ const gameController = (() => {
     const resetGame = () => {
         gameBoard.clear();
         turn = Math.round(Math.random());
+        resetColor();
     }
     const startGame = () => {
         resetGame();
@@ -101,15 +102,22 @@ const gameController = (() => {
                     else turn = 1;
 
                     document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
+                    resetColor();
+                    setColor(turn + 1, "yellow");
                 }
                 else if (endCondition === 3) {
                     turn = -1;
                     document.querySelector('.info').textContent = `The game is a tie!`
+                    resetColor();
+                    setColor(1, "yellow");
+                    setColor(2, "yellow");
                 }
                 else {
                     // End
                     turn = -1;
                     document.querySelector('.info').textContent = `${players[endCondition-1].name} Wins!`
+                    resetColor();
+                    setColor(endCondition, "green");
                 }
             }
     }
@@ -132,6 +140,19 @@ let updatePlayers = (id) => {
 
     gameBoard.updateDisplay();
 };
+
+function resetColor() {
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {
+        if (panel.classList.contains('yellow')) panel.classList.remove('yellow');
+        if (panel.classList.contains('green')) panel.classList.remove('green');
+    });
+}
+
+function setColor(pid, color) {
+    const panel = document.querySelector(`.player${pid}.panel`);
+    panel.classList.add(color);
+}
 
 function setup() {
     const symbolBoxes = document.querySelectorAll('.symbol');

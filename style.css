@@ -49,9 +49,11 @@ body {
 div.player1, div.player2 {
     display: flex;
     flex-direction: column;
-    padding: 4rem;
+    padding: 1rem;
+    margin: 3rem;
     flex: 1;
     align-items: center;
+    border: 1rem solid white;
 }
 
 .name, .symbol {
@@ -105,4 +107,12 @@ button:active {
 
 .startGameButton {
     padding: 1rem 4rem;
+}
+
+div.yellow {
+    border: 1rem solid yellow;
+}
+
+div.green {
+    border: 1rem solid green;
 }
