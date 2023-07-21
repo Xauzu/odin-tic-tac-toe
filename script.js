@@ -43,13 +43,28 @@ const gameBoard = (() => {
         }
         else return 0;
     };
-    return {getBoardState, updateDisplay, clear, play};
+    const forceReplace = (symbol, index) => {
+        board[index] = symbol
+        updateDisplay();
+    };
+    return {getBoardState, updateDisplay, clear, play, forceReplace};
 })();
 
 let updatePlayers = (id) => {
     let user = players[id];
     user.name = document.querySelector(`.player${+id+1}.name`).value;
+
+    const oldSymbol = user.symbol;
     user.symbol = document.querySelector(`.player${+id+1}.symbol`).value;
+
+    const boardState = gameBoard.getBoardState();
+    for (let i = 0; i < boardState.length; i++) 
+        {
+            if (boardState[i] === oldSymbol)
+                gameBoard.forceReplace(user.symbol, i);
+        }
+
+    gameBoard.updateDisplay();
 };
 
 function setup() {
