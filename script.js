@@ -23,13 +23,6 @@ const gameBoard = (() => {
     };
     const isValid = (index) => board[index] === "";
     const play = (player, index) => {
-
-        /* Positions
-         * 0 1 2
-         * 3 4 5
-         * 6 7 8
-         */
-
         if (isValid(index)){
             board[index] = player.symbol;
 
@@ -56,13 +49,69 @@ const gameController = (() => {
         resetGame();
         document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
     }
-    const play = (index) => {
-        if (gameBoard.play(players[turn], index)) {
-            if (turn) turn = 0;
-            else turn = 1;
+    // 0 = No end, 1 = Player 1 Win, 2 = Player 2 Win, 3 = Tie
+    const checkEndCondition = () => {
+        const boardState = gameBoard.getBoardState();
+                
+        /* Positions
+         * 0 1 2
+         * 3 4 5
+         * 6 7 8
+         */
 
-            document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
+        let row = [0, 0, 0];    // i<3 eif_i<6 else
+        let col = [0, 0, 0];    // i%3=0 i%3 i%3=2
+        let diag = [0, 0];      // i%4=0 i%2,i!=0&&i!=8
+        let total = 0;
+
+        for (i = 0; i < boardState.length; i++) {
+            let change = 0;
+            if (boardState[i] !== ''){
+                total++;
+                if (boardState[i] === players[0].symbol) change = -1;
+                else if (boardState[i] === players[1].symbol) change = 1;
+
+                if (i < 3) row[0] += change;
+                else if (i < 6) row[1] += change;
+                else row[2] += change;
+
+                if (i % 3 === 0) col[0] += change;
+                if (i % 3 === 1) col[1] += change;
+                if (i % 3 === 2) col[2] += change;
+
+                if (i % 4 === 0) diag[0] += change;
+                if (i % 2 === 0 && i !== 0 && i !== 8) diag[1] += change;
+            }
         }
+
+        const result = [...row, ...col, ...diag];
+
+        if (result.includes(-3)) return 1;
+        else if (result.includes(3)) return 2;
+        else if (total === 9) return 3;
+
+        return 0;
+    }
+    const play = (index) => {
+        if (turn != -1) 
+            if (gameBoard.play(players[turn], index)) {
+                const endCondition = checkEndCondition();
+                if (endCondition === 0) {
+                    if (turn) turn = 0;
+                    else turn = 1;
+
+                    document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
+                }
+                else if (endCondition === 3) {
+                    turn = -1;
+                    document.querySelector('.info').textContent = `The game is a tie!`
+                }
+                else {
+                    // End
+                    turn = -1;
+                    document.querySelector('.info').textContent = `${players[endCondition-1].name} Wins!`
+                }
+            }
     }
     return {resetGame, startGame, play};
 })();
