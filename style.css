@@ -95,3 +95,10 @@ button:active {
     font-size: xx-large;
     font-weight: bolder;
 }
+
+.gameButton {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}

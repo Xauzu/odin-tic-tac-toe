@@ -5,9 +5,6 @@ const player = (name, symbol) => {
 let players = [ player('Player 1', 'X'), 
                 player('Player 2', 'O')];
 
-const gameController = (() => {
-})();
-
 const gameBoard = (() => {
     let board = ["", "", "",
                  "", "", "",
@@ -24,8 +21,8 @@ const gameBoard = (() => {
         board.fill("");
         updateDisplay();
     };
-    const isValid = (x, y) => board[x + y * 3] === "";
-    const play = (player, x, y) => {
+    const isValid = (index) => board[index] === "";
+    const play = (player, index) => {
 
         /* Positions
          * 0 1 2
@@ -33,8 +30,7 @@ const gameBoard = (() => {
          * 6 7 8
          */
 
-        if (isValid(x, y)){
-            let index = x + y * 3;
+        if (isValid(index)){
             board[index] = player.symbol;
 
             updateDisplay();
@@ -48,6 +44,27 @@ const gameBoard = (() => {
         updateDisplay();
     };
     return {getBoardState, updateDisplay, clear, play, forceReplace};
+})();
+
+const gameController = (() => {
+    let turn = 0;
+    const resetGame = () => {
+        gameBoard.clear();
+        turn = Math.round(Math.random());
+    }
+    const startGame = () => {
+        resetGame();
+        document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
+    }
+    const play = (index) => {
+        if (gameBoard.play(players[turn], index)) {
+            if (turn) turn = 0;
+            else turn = 1;
+
+            document.querySelector('.info').textContent = `${players[turn].name}'s turn to play.`
+        }
+    }
+    return {resetGame, startGame, play};
 })();
 
 let updatePlayers = (id) => {
@@ -68,18 +85,30 @@ let updatePlayers = (id) => {
 };
 
 function setup() {
-    let symbolBoxes = document.querySelectorAll('.symbol');
+    const symbolBoxes = document.querySelectorAll('.symbol');
     symbolBoxes.forEach(element => {
         element.addEventListener('change', () => {
             element.value = element.value.charAt(0);
         });
     });
 
-    let updateButtons = document.querySelectorAll('.updatePlayerButton');
+    const updateButtons = document.querySelectorAll('.updatePlayerButton');
     updateButtons.forEach(element => {
         element.addEventListener('click', () => {
             updatePlayers(element.getAttribute('pid'));
         });
+    });
+
+    const startGameButton = document.querySelector('.startGameButton');
+    startGameButton.addEventListener('click', () => gameController.startGame());
+    const resetGameButton = document.querySelector('.resetGameButton');
+    resetGameButton.addEventListener('click', () => gameController.resetGame());
+    
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            gameController.play(cell.getAttribute('data-id'));
+        })
     });
 }
 
